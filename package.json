@@ -1,6 +1,6 @@
 {
-  "name": "medtask-client",
-  "homepage": "https://jordandickow.github.io/",
+  "name": "react-auth-template",
+  "homepage": "https.jordandickowgithub.io/medtask-client",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

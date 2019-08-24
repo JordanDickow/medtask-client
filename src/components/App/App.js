@@ -9,6 +9,11 @@ import SignIn from '../SignIn/SignIn'
 import SignOut from '../SignOut/SignOut'
 import ChangePassword from '../ChangePassword/ChangePassword'
 
+import CreateMedicine from '../Medicines/CreateMedicine'
+import EditMedicine from '../Medicines/MedicineEdit'
+import Medicine from '../Medicines/Medicine'
+import Medicines from '../Medicines/Medicines'
+
 class App extends Component {
   constructor () {
     super()
@@ -53,6 +58,18 @@ class App extends Component {
           )} />
           <AuthenticatedRoute user={user} path='/change-password' render={() => (
             <ChangePassword alert={this.alert} user={user} />
+          )} />
+          <AuthenticatedRoute user={user} path='/createmedicine' render={() => (
+            <CreateMedicine alert={this.alert} user={user} />
+          )} />
+          <AuthenticatedRoute user={user} path='/medicines/:id/edit' render={() => (
+            <EditMedicine alert={this.alert} user={user} />
+          )} />
+          <AuthenticatedRoute exact path='/medicines' render={() => (
+            <Medicines user={this.user} />
+          )} />
+          <AuthenticatedRoute exact path='/medicines/:id' render={() => (
+            <Medicine user={this.user} />
           )} />
         </main>
       </Fragment>

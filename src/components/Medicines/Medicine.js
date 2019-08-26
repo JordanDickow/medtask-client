@@ -20,23 +20,33 @@ class Medicine extends Component {
   }
 
   componentDidMount () {
-    axios(`${apiUrl}/medicines/${this.props.match.params.id}`)
+    axios({
+      url: `${apiUrl}/medicines/${this.props.match.params.id}`,
+      method: 'GET',
+      headers: {
+        'Authorization': `Token token=${this.props.user.token}`
+      }
+    })
       .then(res => {
         const options = {
           month: 'long',
           day: 'numeric',
           year: 'numeric'
         }
-        const dateObj = new Date(res.data.medicine.prescribed.dueDate)
+        const dateObj = new Date(res.data.medicine.prescribed)
+        const doneObj = new Date(res.data.medicine.dueDate)
+        console.log(dateObj)
         const formattedDate = dateObj.toLocaleDateString(undefined, options)
+        const newDate = doneObj.toLocaleDateString(undefined, options)
         console.log(res.data.medicine)
         this.setState({
           medicine: {
             ...res.data.medicine,
             prescribed: formattedDate,
-            dueDate: formattedDate
+            dueDate: newDate
           }
         })
+        console.log('date is ', this.state.medicine.dueDate)
       })
       .catch(console.error)
   }
@@ -54,12 +64,12 @@ class Medicine extends Component {
 
     return (
       <div>
-        <h3>Book Details</h3>
-        <h4>Title: {medicine.title}</h4>
-        <p>Author: {medicine.author}</p>
-        <p>First Published: {medicine.firstPublished}</p>
-        <p>Original Language: {medicine.originalLanguage}</p>
-        <p>Owner: {medicine.owner}</p>
+        <h3>Your Medicine</h3>
+        <h4>Name: {medicine.name}</h4>
+        <p>Doctor: {medicine.doctor}</p>
+        <p>Prescribed: {medicine.prescribed}</p>
+        <p>Description: {medicine.description}</p>
+        <p>Due Date: {medicine.dueDate}</p>
         {user && user._id === medicine.owner ? ownerButtons : <p>{user ? 'You don\'t own this book' : 'Sign in to edit your books'}</p>}
       </div>
     )

@@ -65,11 +65,11 @@ class App extends Component {
           <AuthenticatedRoute user={user} path='/medicines/:id/edit' render={() => (
             <EditMedicine alert={this.alert} user={user} />
           )} />
-          <AuthenticatedRoute exact path='/medicines' render={() => (
-            <Medicines user={this.user} />
+          <AuthenticatedRoute user={user} exact path='/medicines' render={() => (
+            <Medicines user={user} />
           )} />
-          <AuthenticatedRoute exact path='/medicines/:id' render={() => (
-            <Medicine user={this.user} />
+          <AuthenticatedRoute user={user} exact path='/medicines/:id' render={() => (
+            <Medicine user={user} />
           )} />
         </main>
       </Fragment>

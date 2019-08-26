@@ -47,9 +47,11 @@ class CreateMedicine extends Component {
   }
 
   render () {
+    console.log('create med render workign')
     const { createdMedicineId, medicine } = this.state
 
     if (createdMedicineId) {
+      console.log('redirecting to created medicine')
       return <Redirect to={`/medicines/${createdMedicineId}`} />
     }
 
@@ -85,6 +87,7 @@ class CreateMedicine extends Component {
               onChange={this.handleChange}
               value={medicine.prescribed}
             />
+
           </Form.Group>
           <Form.Group controlId="description">
             <Form.Label>Description</Form.Label>
@@ -95,6 +98,7 @@ class CreateMedicine extends Component {
               onChange={this.handleChange}
               value={medicine.description}
             />
+
           </Form.Group>
           <Form.Group controlId="dueDate">
             <Form.Label>Due Date
@@ -103,10 +107,11 @@ class CreateMedicine extends Component {
                 placeholder="dueDate"
                 name="dueDate"
                 onChange={this.handleChange}
-                value={medicine.description}
+                value={medicine.dueDate}
               />
             </Form.Label>
           </Form.Group>
+
           <Button variant="primary" type="submit">
         Submit
           </Button>

@@ -48,7 +48,7 @@ handleSubmit = event => {
   })
     .then(() => this.props.history.push(`/medicines/
       ${this.state.medicine._id}`))
-    .then(() => this.props.alert('Your Medicine has been updated', 'successs'))
+    .then(() => this.props.alert('Your Medicine has been updated', 'success'))
     .catch(() => this.props.alert('Lol.'))
 }
 render () {
@@ -82,7 +82,7 @@ render () {
 
             placeholder="Docotor"
 
-            name="docotor"
+            name="doctor"
 
             onChange={this.handleChange}
 

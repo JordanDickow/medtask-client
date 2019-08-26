@@ -11,7 +11,8 @@ class CreateMedicine extends Component {
     super(props)
 
     this.state = {
-      name: {
+      medicine: {
+        name: '',
         doctor: '',
         prescribed: '',
         description: '',
@@ -25,7 +26,7 @@ class CreateMedicine extends Component {
     const updatedField = {
       [event.target.name]: event.target.value
     }
-    const editedMedicine = Object.assign(this.state.book, updatedField)
+    const editedMedicine = Object.assign(this.state.medicine, updatedField)
     this.setState({ medicine: editedMedicine })
   }
 
@@ -84,31 +85,31 @@ class CreateMedicine extends Component {
               onChange={this.handleChange}
               value={medicine.prescribed}
             />
-            <Form.Group controlId="description">
-              <Form.Label>Description</Form.Label>
+          </Form.Group>
+          <Form.Group controlId="description">
+            <Form.Label>Description</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Description"
+              name="description"
+              onChange={this.handleChange}
+              value={medicine.description}
+            />
+          </Form.Group>
+          <Form.Group controlId="dueDate">
+            <Form.Label>Due Date
               <Form.Control
-                type="text"
-                placeholder="Description"
-                name="description"
+                type="date"
+                placeholder="dueDate"
+                name="dueDate"
                 onChange={this.handleChange}
                 value={medicine.description}
               />
-              <Form.Group controlId="dueDate">
-                <Form.Label>Due Date
-                  <Form.Control
-                    type="date"
-                    placeholder="dueDate"
-                    name="dueDate"
-                    onChange={this.handleChange}
-                    value={medicine.description}
-                  />
-                </Form.Label>
-              </Form.Group>
-              <Button variant="primary" type="submit">
-        Submit
-              </Button>
-            </Form.Group>
+            </Form.Label>
           </Form.Group>
+          <Button variant="primary" type="submit">
+        Submit
+          </Button>
         </Form>
       </Layout>
 

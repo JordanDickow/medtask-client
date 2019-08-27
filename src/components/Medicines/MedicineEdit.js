@@ -17,7 +17,8 @@ class EditMedicine extends Component {
         description: '',
         dueDate: ''
 
-      }
+      },
+      updated: false
     }
   }
 
@@ -31,6 +32,7 @@ class EditMedicine extends Component {
       data: { medicine: this.state.medicine }
     })
   }
+
 handleChange = event => {
   const updatedField = {
     [event.target.name]: event.target.value.name
@@ -61,10 +63,10 @@ handleSubmit = event => {
     .then(() => this.props.alert('Your Medicine has been updated', 'success'))
     .catch(() => this.props.alert('Please check all fields and try again.'))
 }
+
 render () {
-  console.log(`${this.props.user.token}`)
-  const { medicine } = this.state
-  const { updated } = this
+  const { updated } = this.state
+  const { handleChange, handleSubmit } = this
   if (updated) {
     return <Redirect to={
       {
@@ -87,8 +89,8 @@ render () {
           type="text"
           placeholder="Name"
           name="name"
-          onChange={this.handleChange}
-          value={medicine.name}
+          handleChange={handleChange}
+          handleSubmit={handleSubmit}
 
         />
 
@@ -105,10 +107,8 @@ render () {
 
           name="doctor"
 
-          onChange={this.handleChange}
-
-          value={medicine.doctor}
-
+          handleChange={handleChange}
+          handleSubmit={handleSubmit}
         />
 
       </Form.Group>
@@ -124,9 +124,8 @@ render () {
 
           name="prescribed"
 
-          onChange={this.handleChange}
-
-          value={medicine.prescribed}
+          handleChange={handleChange}
+          handleSubmit={handleSubmit}
 
         />
 
@@ -144,9 +143,8 @@ render () {
 
           name="description"
 
-          onChange={this.handleChange}
-
-          value={medicine.description}
+          handleChange={handleChange}
+          handleSubmit={handleSubmit}
 
         />
 
@@ -163,9 +161,8 @@ render () {
 
           name="dueDate"
 
-          onChange={this.handleChange}
-
-          value={medicine.dueDate}
+          handleChange={handleChange}
+          handleSubmit={handleSubmit}
 
         />
 

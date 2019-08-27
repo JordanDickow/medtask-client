@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import apiUrl from '../../apiConfig'
 import Button from 'react-bootstrap/Button'
-import { Link, withRouter } from 'react-router-dom'
+import { Redirect, Link, withRouter } from 'react-router-dom'
 
 class Medicine extends Component {
   constructor (props) {
@@ -14,6 +14,7 @@ class Medicine extends Component {
         prescribed: '',
         description: '',
         dueDate: '',
+        deleted: '',
         owner: ''
       }
     }
@@ -27,6 +28,7 @@ class Medicine extends Component {
         'Authorization': `Token token=${this.props.user.token}`
       }
     })
+
       .then(res => {
         const options = {
           month: 'long',
@@ -49,14 +51,31 @@ class Medicine extends Component {
       })
       .catch(console.error)
   }
+  destroy = () => {
+    axios({
+      url: `${apiUrl}/medicines/${this.props.match.params.id}`,
+      headers: {
+        'Authorization': `Token token=${this.props.user.token}` },
+      method: 'DELETE'
+    })
+      .then(res => this.setState({ deleted: true }))
+      .catch(err => this.setState({ error: err.message }))
+  }
 
   render () {
-    console.log(`${this.props.user.token}`)
-    const { medicine } = this.state
+    const { medicine, deleted } = this.state
+    if (!medicine) {
+      return <p> One Momemnt Please...</p>
+    }
+    if (deleted) {
+      return <Redirect to={
+        { pathname: '/medicnes', state: { deleted: true } }
+      } />
+    }
     const { user } = this.props
     const ownerButtons = (
       <div>
-        <Button className="mr-2" variant="danger">Delete</Button>
+        <Button onClick={this.destroy} className="mr-2" variant="danger">Delete</Button>
         <Link to={`/medicines/${this.props.match.params.id}/edit`}>Edit</Link>
       </div>
     )

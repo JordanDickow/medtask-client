@@ -49,7 +49,7 @@ class Medicines extends Component {
     return (
       // return  the medicines array with a button that routes to /createmedicine
       <Layout >
-        <p > random text < /p> <h3 className = "d-flex justify-content-between" > Medicine {user && < Button href = "#createmedicine" > Add your Medicine < /Button>}</h3 >
+        <h3 className = "d-flex justify-content-between" > Your Medicine {user && < Button href = "#createmedicine" > Add your Medicine < /Button>}</h3 >
         <ListGroup > {medicinesArray} </ListGroup> </Layout>)
   }
 }

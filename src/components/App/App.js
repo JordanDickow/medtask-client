@@ -63,7 +63,7 @@ class App extends Component {
             <CreateMedicine alert={this.alert} user={user} />
           )} />
           <AuthenticatedRoute user={user} exact path='/medicines/:id/edit' render={() => (
-            <EditMedicine alert={this.alert} user={user} />
+            <EditMedicine user={user} alert={this.alert} />
           )} />
           <AuthenticatedRoute user={user} exact path='/medicines' render={() => (
             <Medicines user={user} />

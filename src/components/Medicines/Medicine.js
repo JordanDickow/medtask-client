@@ -51,6 +51,7 @@ class Medicine extends Component {
   }
 
   render () {
+    console.log(`${this.props.user.token}`)
     const { medicine } = this.state
     const { user } = this.props
     const ownerButtons = (

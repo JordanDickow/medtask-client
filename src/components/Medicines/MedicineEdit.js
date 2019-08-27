@@ -3,7 +3,7 @@ import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import apiUrl from '../../apiConfig'
 import axios from 'axios'
-import { withRouter } from 'react-router-dom'
+import { Redirect, withRouter } from 'react-router-dom'
 
 class EditMedicine extends Component {
   constructor (props) {
@@ -22,23 +22,28 @@ class EditMedicine extends Component {
   }
 
   componentDidMount () {
-    axios(`${apiUrl}/medicines/${this.props.match.params.id}`)
-      .then(res => this.setState({ medicine:
-    res.data.medicine }))
-      .catch(console.error)
+    axios({
+      url: `${apiUrl}/medicines/${this.props.match.params.id}`,
+      method: 'PATCH',
+      headers: {
+        'Authorization': `Token token=${this.props.user.token}`
+      },
+      data: { medicine: this.state.medicine }
+    })
   }
-
 handleChange = event => {
   const updatedField = {
-    [event.target]: event.target.value
+    [event.target.name]: event.target.value.name
   }
   const editedMedicine = Object.assign(this.state.medicine, updatedField)
+  this.setState({ medicine: updatedField })
 
   this.setState({ medicine: editedMedicine })
 }
 
 handleSubmit = event => {
   event.preventDefault()
+
   axios({
     url: `${apiUrl}/medicines/${this.props.match.params.id}`,
     method: 'PATCH',
@@ -47,114 +52,128 @@ handleSubmit = event => {
     },
     data: { medicine: this.state.medicine }
   })
+    .then(res => this.setState({
+      medicine: res.data.medicine,
+      updated: true
+    }))
     .then(() => this.props.history.push(`/medicines/
       ${this.state.medicine._id}`))
     .then(() => this.props.alert('Your Medicine has been updated', 'success'))
     .catch(() => this.props.alert('Please check all fields and try again.'))
 }
 render () {
+  console.log(`${this.props.user.token}`)
   const { medicine } = this.state
+  const { updated } = this
+  if (updated) {
+    return <Redirect to={
+      {
+        pathname: `/medicines/${this.props.match.params.id}`,
+        state: {
+          msg: 'Medicine has been updated!'
+        }
+      }
+    }/>
+  }
   return (
 
-    <Form>
+    <Form onSubmit={this.handleSubmit}>
 
-      <Form onSubmit={this.handleSubmit}>
+      <Form.Group controlId="name">
 
-        <Form.Group controlId="name">
+        <Form.Label>Medicine Name</Form.Label>
 
-          <Form.Label>Medicine Name</Form.Label>
+        <Form.Control
+          type="text"
+          placeholder="Name"
+          name="name"
+          onChange={this.handleChange}
+          value={medicine.name}
 
-          <Form.Control
-            type="text" placeholder="Name"
-            name="name"
-            onChange={this.handleChange}
-            value={medicine.name}
+        />
 
-          />
+      </Form.Group>
+      <Form.Group controlId="doctor">
 
-        </Form.Group>
-        <Form.Group controlId="doctor">
+        <Form.Label>Doctor</Form.Label>
 
-          <Form.Label>Doctor</Form.Label>
+        <Form.Control
 
-          <Form.Control
+          type="text"
 
-            type="text"
+          placeholder="Doctor"
 
-            placeholder="Doctor"
+          name="doctor"
 
-            name="doctor"
+          onChange={this.handleChange}
 
-            onChange={this.handleChange}
+          value={medicine.doctor}
 
-            value={medicine.doctor}
+        />
 
-          />
+      </Form.Group>
+      <Form.Group controlId="prescribed">
 
-        </Form.Group>
-        <Form.Group controlId="prescribed">
+        <Form.Label>Prescribed</Form.Label>
 
-          <Form.Label>Prescribed</Form.Label>
+        <Form.Control
 
-          <Form.Control
+          type="date"
 
-            type="date"
+          placeholder="Prescribed"
 
-            placeholder="prescribed"
+          name="prescribed"
 
-            name="prescribed"
+          onChange={this.handleChange}
 
-            onChange={this.handleChange}
+          value={medicine.prescribed}
 
-            value={medicine.prescribed}
+        />
 
-          />
+      </Form.Group>
 
-        </Form.Group>
+      <Form.Group controlId="description">
 
-        <Form.Group controlId="description">
+        <Form.Label>Description</Form.Label>
 
-          <Form.Label>Description</Form.Label>
+        <Form.Control
 
-          <Form.Control
+          type="text"
 
-            type="text"
+          placeholder="Description"
 
-            placeholder="description"
+          name="description"
 
-            name="description"
+          onChange={this.handleChange}
 
-            onChange={this.handleChange}
+          value={medicine.description}
 
-            value={medicine.description}
+        />
 
-          />
+      </Form.Group>
+      <Form.Group controlId="dueDate">
 
-        </Form.Group>
-        <Form.Group controlId="dueDate">
+        <Form.Label>Due Date</Form.Label>
 
-          <Form.Label>Due Date</Form.Label>
+        <Form.Control
 
-          <Form.Control
+          type="date"
 
-            type="date"
+          placeholder="dueDate"
 
-            placeholder="dueDate"
+          name="dueDate"
 
-            name="dueDate"
+          onChange={this.handleChange}
 
-            onChange={this.handleChange}
+          value={medicine.dueDate}
 
-            value={medicine.dueDate}
+        />
 
-          />
-
-        </Form.Group>
-        <Button variant="primary" type="submit">
+      </Form.Group>
+      <Button variant="primary" type="submit">
     Submit
 
-        </Button>
-      </Form>
+      </Button>
     </Form>
   )
 }

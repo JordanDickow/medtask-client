@@ -16,7 +16,6 @@ class Medicines extends Component {
   }
   //  makes GET Request to respond with array of created items
   componentDidMount () {
-    console.log('axios working')
     axios({
       url: `${apiUrl}/medicines`,
       method: 'GET',
@@ -33,7 +32,6 @@ class Medicines extends Component {
   }
 
   render () {
-    console.log('render working')
     //  deconstruct medicines and set value to this state
     const { medicines } = this.state
     // deconstruct user and   set  value to props

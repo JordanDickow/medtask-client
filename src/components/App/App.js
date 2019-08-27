@@ -62,7 +62,7 @@ class App extends Component {
           <AuthenticatedRoute user={user} path='/createmedicine' render={() => (
             <CreateMedicine alert={this.alert} user={user} />
           )} />
-          <AuthenticatedRoute user={user} path='/medicines/:id/edit' render={() => (
+          <AuthenticatedRoute user={user} exact path='/medicines/:id/edit' render={() => (
             <EditMedicine alert={this.alert} user={user} />
           )} />
           <AuthenticatedRoute user={user} exact path='/medicines' render={() => (

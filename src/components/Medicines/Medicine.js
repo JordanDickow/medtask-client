@@ -46,7 +46,6 @@ class Medicine extends Component {
             dueDate: newDate
           }
         })
-        console.log('date is ', this.state.medicine.dueDate)
       })
       .catch(console.error)
   }
@@ -57,8 +56,7 @@ class Medicine extends Component {
     const ownerButtons = (
       <div>
         <Button className="mr-2" variant="danger">Delete</Button>
-        <Link to={`/medicines/${this.props.match.params.id}/edit`}></Link>
-        <Button className="edit" variant="primary">Edit</Button>
+        <Link to={`/medicines/${this.props.match.params.id}/edit`}>Edit</Link>
       </div>
     )
 

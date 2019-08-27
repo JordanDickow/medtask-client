@@ -10,7 +10,8 @@ class EditMedicine extends Component {
     super(props)
 
     this.state = {
-      name: {
+      medicine: {
+        name: '',
         doctor: '',
         prescribed: '',
         description: '',
@@ -21,9 +22,9 @@ class EditMedicine extends Component {
   }
 
   componentDidMount () {
-    axios(`${apiUrl}/books/${this.props.match.params.id}`)
-      .then(res => this.setState({ book:
-    res.data.book }))
+    axios(`${apiUrl}/medicines/${this.props.match.params.id}`)
+      .then(res => this.setState({ medicine:
+    res.data.medicine }))
       .catch(console.error)
   }
 
@@ -49,7 +50,7 @@ handleSubmit = event => {
     .then(() => this.props.history.push(`/medicines/
       ${this.state.medicine._id}`))
     .then(() => this.props.alert('Your Medicine has been updated', 'success'))
-    .catch(() => this.props.alert('Lol.'))
+    .catch(() => this.props.alert('Please check all fields and try again.'))
 }
 render () {
   const { medicine } = this.state
@@ -80,7 +81,7 @@ render () {
 
             type="text"
 
-            placeholder="Docotor"
+            placeholder="Doctor"
 
             name="doctor"
 
